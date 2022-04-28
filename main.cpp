@@ -12,31 +12,30 @@ void initTopology() {
         for (int j = 0; j < topology[i].size(); j++) {
             topology[j][i] = topology[i][j];
             if (i != j && topology[j][i] == 0) {
-                // topology[j][i] = INT32_MAX;
             }
-            // cout << topology[i][j] << "\t";
         }
-        // cout << endl;
     }
 }
 
 int main(int argc, char const* argv[]) {
 
-    Spf obj;
     initTopology(); // 不补全另一半有些解出不来，因为路径在一定方向上不连接
-    obj.G = topology;
-    obj.run();
 
-    for (int metric : obj.min) {
-        cout << metric << " ";
+    Spf obj(topology);
+
+    auto results = obj.run();
+
+    for (int i = 0; i < results.size(); i++) {
+        cout << "v" << i << ":" << results[i] << " ";
     }
 
     cout << endl;
 
-    for (auto pr : obj.reslove) {
-        string str('\n', 1024);
-        sprintf((char*)str.c_str(), " %d -> %d", pr.first, pr.second);
-        cout << str << endl;
+    auto path = obj.getPath(8); // v1 到v8的距离
+    for (auto pr : path) {
+        char buf[1024] = {0};
+        sprintf(buf, "v%d [%d]->", pr.first, pr.second);
+        cout << buf << " ";
     }
 
     return 0;
