@@ -13,21 +13,17 @@ public:
     // metric
     vector<int> min;
 
+    map<int, int> reslove; // 目标点 => 一个跳id
+
     void run() {
-        min = G[0];
-
-        for (int i = 0; i < min.size(); i++) {
-            path[i] = false;
-        }
-        path[0] = true; // 起点不需要寻找
-
-        while (!complete()) {
+        do {
             update();
-        }
+        } while (!complete());
     }
 
     void update() {
         int v1 = getMinPoint(); // 找到每次的起点
+
         map<int, int> lbs = getLabers(v1); // pointId => metric 不在path里跟minPoint连接的点 : 邻居
 
         path[v1] = true; // 标记为最优解
@@ -39,6 +35,7 @@ public:
 
             if (metric < min[pr.first] || min[pr.first] == 0) { // 发现更优解
                 min[pr.first] = metric;
+                reslove[pr.first] = v1;
             }
         }
     }
@@ -54,6 +51,17 @@ public:
     }
 
     int getMinPoint() {
+        // 第一次从起点开始寻找
+        if (path.size() <= 0) {
+            for (int i = 0; i < min.size(); i++) {
+                path[i] = false;
+            }
+
+            min = G[0];
+
+            return 0;
+        }
+
         int minPt = 0;
         int minValue = INT32_MAX;
 
