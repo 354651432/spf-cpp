@@ -1,3 +1,5 @@
+#pragma once
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -16,3 +18,24 @@ vector<vector<int>> topology = {
 };
 
 vector<string> points = {"v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8"};
+
+vector<vector<int>> transform(const vector<vector<int>>& src, vector<int> ids) {
+    vector<vector<int>> ret;
+    for (int i : ids) {
+        vector<int> arr;
+        for (int j : ids) {
+            arr.push_back(src[i][j]);
+        }
+        ret.push_back(arr);
+    }
+    return ret;
+}
+
+void showMatrix(const vector<vector<int>>& metrix) {
+    for (auto arr : metrix) {
+        for (int j : arr) {
+            cout << j << " ";
+        }
+        cout << endl;
+    }
+}

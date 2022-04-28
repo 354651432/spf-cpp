@@ -94,11 +94,12 @@ public:
         : G(G) { }
 
     vector<int> run() {
-        for (int i = 0; i < minArr.size(); i++) {
+        for (int i = 0; i < G.size(); i++) {
             minBoolArr[i] = false;
+            minArr.push_back(0);
         }
 
-        minArr = G[0];
+        // minArr = G[0];
 
         do {
             update();
