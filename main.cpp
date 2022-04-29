@@ -22,13 +22,21 @@ int main(int argc, char const* argv[]) {
 
     initTopology(); // 不补全另一半有些解出不来，因为路径在一定方向上不连接
 
-    ShortPath alorObj(topology, 8, 0);
-    auto metric = alorObj.getMetric();
+    // ShortPath alorObj(topology, 8, 0);
+    // auto metric = alorObj.getMetric();
 
-    cout << metric << endl;
+    // cout << metric << endl;
 
-    for (auto it : alorObj.getPath()) {
-        cout << it << " ";
+    // for (auto it : alorObj.getPath()) {
+    //     cout << it << " ";
+    // }
+
+    Graph<string> g(points, topology);
+    auto result = g.getSortPath("v1", "v8");
+    for (auto it : result) {
+        char buf[50] = {0};
+        sprintf(buf, "%s: %d -> ", it.first.c_str(), it.second);
+        cout << buf;
     }
 
     return 0;
